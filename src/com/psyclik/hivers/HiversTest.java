@@ -1,10 +1,9 @@
 package com.psyclik.hivers;
 
+import java.util.stream.IntStream;
 import com.mti.hivers.impl.provider.Prototype;
 import com.mti.hivers.impl.provider.Singleton;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +12,7 @@ class HiversTest {
     public interface TestService {
         void ping();
     }
+
     public static class TestServiceImpl implements TestService {
         @Override public void ping() { System.out.println("ping"); }
     }
@@ -20,14 +20,11 @@ class HiversTest {
     public static class Nested {
         private final TestService testService;
 
-        public Nested(final TestService testService) {
-            this.testService = testService;
-        }
+        public Nested(final TestService testService) { this.testService = testService; }
     }
 
     @Test
     public void testBasicHiversUserCase() {
-
         final var hivers = new Hivers();
 
         hivers.addProvider(new Singleton<>(TestService.class, new TestServiceImpl()));
